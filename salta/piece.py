@@ -5,7 +5,7 @@ from .constants import RED, WHITE, GREY, SQUARE_SIZE, CROWN
 
 # TODO: create pieces of specific type
 class Piece:
-    PADDING = 15
+    PADDING = 13
     OUTLINE = 2
 
     def __init__(self, row, col, color):
