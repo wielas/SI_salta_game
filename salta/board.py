@@ -1,20 +1,29 @@
 import pygame
-from .constants import BLACK, RED, WHITE, SQUARE_SIZE, ROWS, COLS
+from .constants import BLACK, RED, WHITE, BRONZE, DBRONZE, SQUARE_SIZE, ROWS, COLS
 from .piece import Piece
+
 
 class Board:
     def __init__(self):
         self.board = []
-        self.selected_piece = None
         self.create_board()
 
         self.red_left = self.white_left = 15  # not necessary
 
     def draw_squares(self, win):
-        win.fill(BLACK)
+        win.fill(DBRONZE)
         for row in range(ROWS):
             for col in range(row % 2, COLS, 2):
-                pygame.draw.rect(win, RED, (row*SQUARE_SIZE, col*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+                pygame.draw.rect(win, BRONZE, (row * SQUARE_SIZE, col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+
+    def move(self, piece, row, col):
+        self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
+        piece.move(row, col)
+
+        # TODO: make on_place val == True (II 20:00)
+
+    def get_piece(self, row, col):
+        return self.board[row][col]
 
     def create_board(self):
         for row in range(ROWS):
@@ -24,7 +33,7 @@ class Board:
                     if row < 3:
                         self.board[row].append(Piece(row, col, WHITE))
                     elif row > 6:
-                        self.board[row].append(Piece(row, col, RED))
+                        self.board[row].append(Piece(row, col, BLACK))
                     else:
                         self.board[row].append(0)
                 else:
