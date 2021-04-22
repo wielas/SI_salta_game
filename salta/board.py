@@ -33,7 +33,7 @@ class Board:
                     if row < 3:
                         self.board[row].append(Piece(row, col, WHITE))
                     elif row > 6:
-                        self.board[row].append(Piece(row, col, BLACK))
+                        self.board[row].append(Piece(row, col, BLACK))  # RED
                     else:
                         self.board[row].append(0)
                 else:
