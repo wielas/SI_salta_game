@@ -15,4 +15,9 @@ BRONZE = (176, 141, 87)
 DBRONZE = (128, 74, 0)
 
 CROWN = pygame.transform.scale(pygame.image.load('assets/crown.png'), (45, 25))
+STAR1 = pygame.transform.scale(pygame.image.load('assets/star1'))
+STAR2 = pygame.transform.scale(pygame.image.load('assets/star2'))
+STAR3 = pygame.transform.scale(pygame.image.load('assets/star3'))
+STAR4 = pygame.transform.scale(pygame.image.load('assets/star4'))
+STAR5 = pygame.transform.scale(pygame.image.load('assets/star5'))
 

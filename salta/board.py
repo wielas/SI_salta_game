@@ -20,7 +20,7 @@ class Board:
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
 
-        # TODO: make on_place val == True (II 20:00)
+        # TODO: make on_place val == True (II 20:00, III 53:00)
 
     def get_piece(self, row, col):
         return self.board[row][col]
@@ -47,6 +47,10 @@ class Board:
                 if piece != 0:
                     piece.draw(win)
 
+    def winner(self):
+        # TODO
+        return None
+
     def get_valid_moves(self, piece):
         # TODO: make jumps single and compulsory
         moves = {}
@@ -60,7 +64,7 @@ class Board:
 
         #if piece.color == GREEN:
         moves.update(self._traverse_left(row + 1, min(row + 3, ROWS), 1, piece.color, left))
-        moves.update(self._traverse_right(row + 1, max(row + 3, ROWS), 1, piece.color, right))
+        moves.update(self._traverse_right(row + 1, min(row + 3, ROWS), 1, piece.color, right))
 
         return moves
 
@@ -80,20 +84,20 @@ class Board:
                 else:
                     moves[(r, left)] = last
 
-                if last:  # check if can jump anymore from blank space after doing a move
-                    if step == -1:
-                        row = max(r-3, 0)
-                    else:
-                        row = min(r+3, ROWS)
-
-                    moves.update(self._traverse_left(r+step, row, step, color, left-1, skipped=last))  # multi-jump
-                    moves.update(self._traverse_right(r+step, row, step, color, left+1, skipped=last))  # multi-jump
+                # if last:  # check if can jump anymore from blank space after doing a move
+                #     if step == -1:
+                #         row = max(r-3, 0)
+                #     else:
+                #         row = min(r+3, ROWS)
+                #
+                #     moves.update(self._traverse_left(r+step, row, step, color, left-1, skipped=last))  # multi-jump
+                #     moves.update(self._traverse_right(r+step, row, step, color, left+1, skipped=last))  # multi-jump
                 break
 
             elif current.color == color:  # if allied color piece is on square
                 break
-            else:  # if another color is on square
-                last = [current]  # loop again
+            # else:  # if another color is on square
+            #     last = [current]  # loop again
 
             left -= 1
 
@@ -110,25 +114,25 @@ class Board:
             if current == 0:  # if square is empty
                 if skipped and not last:  # skipped over something, next move w/o possibility to jump again
                     break
-                elif skipped:
-                    moves[(r, right)] = last + skipped
+                # elif skipped:
+                #     moves[(r, right)] = last + skipped
                 else:
                     moves[(r, right)] = last
 
-                if last:  # check if can jump anymore from blank space after doing a move
-                    if step == -1:
-                        row = max(r - 3, 0)
-                    else:
-                        row = min(r + 3, ROWS)
-
-                    moves.update(self._traverse_left(r + step, row, step, color, right - 1, skipped=last))  # multi-jump
-                    moves.update(self._traverse_right(r + step, row, step, color, right + 1, skipped=last))  # multi-jump
+                # if last:  # check if can jump anymore from blank space after doing a move
+                #     if step == -1:
+                #         row = max(r - 3, 0)
+                #     else:
+                #         row = min(r + 3, ROWS)
+                #
+                #     moves.update(self._traverse_left(r + step, row, step, color, right - 1, skipped=last))  # multi-jump
+                #     moves.update(self._traverse_right(r + step, row, step, color, right + 1, skipped=last))  # multi-jump
                 break
 
             elif current.color == color:  # if allied color piece is on square
                 break
-            else:  # if another color is on square
-                last = [current]  # loop again
+            # else:  # if another color is on square
+            #     last = [current]  # loop again
 
             right += 1
 
