@@ -1,5 +1,5 @@
 import pygame
-from salta.constants import WIDTH, HEIGHT, SQUARE_SIZE
+from salta.constants import RED, WIDTH, HEIGHT, SQUARE_SIZE
 from salta.game import Game
 
 FPS = 60
@@ -29,8 +29,8 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_row_col_from_mouse(pos)
-                piece = board.get_piece(row, col)
-                board.move(piece, 4, 3)
+                #if game.turn == RED:
+                game.select(row, col)
 
 
         game.update()
