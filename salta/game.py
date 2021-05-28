@@ -13,6 +13,7 @@ class Game:
         pygame.display.update()
 
     def _init(self):
+        self.compulsory_jump = False
         self.selected = None
         self.board = Board()
         self.turn = RED
@@ -30,8 +31,15 @@ class Game:
 
         piece = self.board.get_piece(row, col)
         if piece != 0 and piece.color == self.turn:
-            self.selected = piece
-            self.valid_moves = self.board.get_valid_moves(piece)
+            if self.compulsory_jump:
+                _, valid_skip = self.board.get_valid_moves(piece)
+                if valid_skip:
+                    self.selected = piece
+                    self.valid_moves, _ = self.board.get_valid_moves(piece)
+
+            else:
+                self.selected = piece
+                self.valid_moves, valid_skip = self.board.get_valid_moves(piece)
             return True
 
         return False
@@ -56,5 +64,37 @@ class Game:
         self.valid_moves = []
         if self.turn == RED:
             self.turn = GREEN
+
+            self.compulsory_jump = False
+            self.check_for_green_skips()
         else:
             self.turn = RED
+
+            self.compulsory_jump = False
+            self.check_for_red_skips()
+
+    def check_for_green_skips(self):
+        all_pieces = self.board.get_green_pieces()
+
+        for piece in all_pieces:
+            v_moves, valid_skip = self.board.get_valid_moves(piece)
+
+            if valid_skip:
+                self.valid_moves = v_moves
+                self.compulsory_jump = True
+                self.selected = None
+
+        self.update()
+
+    def check_for_red_skips(self):
+        all_pieces = self.board.get_red_pieces()
+
+        for piece in all_pieces:
+            v_moves, valid_skip = self.board.get_valid_moves(piece)
+
+            if valid_skip:
+                self.valid_moves = v_moves
+                self.compulsory_jump = True
+                self.selected = None
+
+        self.update()

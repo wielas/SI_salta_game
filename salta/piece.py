@@ -1,7 +1,6 @@
 import pygame.draw
-
-from .constants import RED, WHITE, GREY, SQUARE_SIZE, CROWN
-
+from .constants import RED, WHITE, GREY, SQUARE_SIZE, CROWN, IMG0, IMG1, IMG2, IMG3, IMG4, IMG5, IMG6, IMG7, IMG8, \
+    IMG9, IMG10, IMG11, IMG12, IMG13, IMG14
 
 # TODO: create pieces of specific type
 class Piece:
@@ -12,6 +11,12 @@ class Piece:
         self.row = row
         self.col = col
         self.color = color
+        self.id = col//2 + row*5
+
+        # FOR PIECE ID
+        # pygame.font.init()
+        # self.myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        # self.textsurface = self.myfont.render(str(self.id), False, (0, 0, 0))
 
         self.x = 0
         self.y = 0
@@ -26,7 +31,13 @@ class Piece:
         pygame.draw.circle(win, GREY, (self.x, self.y), radius + self.OUTLINE)
         pygame.draw.circle(win, self.color, (self.x, self.y), radius)
         # drawing image
-        win.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
+        if self.id in range(0, 15):
+            win.blit(eval(f"IMG{self.id}"), (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
+        elif self.id in range(35, 50):
+            win.blit(eval(f"IMG{49 - self.id}"), (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
+
+        # PRINT PIECE ID
+        # win.blit(self.textsurface, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
 
     def move(self, row, col):
         self.row = row
