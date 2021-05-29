@@ -12,6 +12,9 @@ class Piece:
         self.col = col
         self.color = color
         self.id = col//2 + row*5
+        self.starting_row = row
+        self.starting_col = col
+        self.on_place = False
 
         # FOR PIECE ID
         # pygame.font.init()
@@ -31,10 +34,12 @@ class Piece:
         pygame.draw.circle(win, GREY, (self.x, self.y), radius + self.OUTLINE)
         pygame.draw.circle(win, self.color, (self.x, self.y), radius)
         # drawing image
-        if self.id in range(0, 15):
+        if self.id in range(0, 15) and not self.on_place:
             win.blit(eval(f"IMG{self.id}"), (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
-        elif self.id in range(35, 50):
+        elif self.id in range(35, 50) and not self.on_place:
             win.blit(eval(f"IMG{49 - self.id}"), (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
+        elif self.on_place:
+            win.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
 
         # PRINT PIECE ID
         # win.blit(self.textsurface, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
