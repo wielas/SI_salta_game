@@ -19,8 +19,23 @@ class Board:
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
-
+        self.check_if_on_place(piece, row, col)
         # TODO: make on_place val == True (II 20:00)
+
+    def check_if_on_place(self, piece, row, col):
+        if piece.starting_row == 0 or piece.starting_row == 3:
+            if piece.row == piece.starting_row + 7 and piece.col == piece.starting_col - 1:
+                piece.on_place = True
+        elif piece.starting_row == 1:
+            if piece.row == piece.starting_row + 7 and piece.col == piece.starting_col + 1:
+                piece.on_place = True
+
+        elif piece.starting_row == 7 or piece.starting_row == 9:
+            if piece.row == piece.starting_row - 7 and piece.col == piece.starting_col + 1:
+                piece.on_place = True
+        elif piece.starting_row == 8:
+            if piece.row == piece.starting_row - 7 and piece.col == piece.starting_col - 1:
+                piece.on_place = True
 
     def get_piece(self, row, col):
         return self.board[row][col]

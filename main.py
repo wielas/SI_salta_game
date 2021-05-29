@@ -14,6 +14,7 @@ def get_row_col_from_mouse(pos):
     col = x // SQUARE_SIZE
     return row, col
 
+
 def main():
     run = True
     clock = pygame.time.Clock()
@@ -32,9 +33,9 @@ def main():
 
                 game.select(row, col)
 
-
         game.update()
 
     pygame.quit()
+
 
 main()

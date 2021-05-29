@@ -1,5 +1,5 @@
 import pygame
-from .constants import RED, GREEN, BLUE, SQUARE_SIZE
+from .constants import RED, GREEN, BLUE, SQUARE_SIZE, CROWN, WIDTH, HEIGHT
 from salta.board import Board
 
 class Game:
@@ -76,6 +76,10 @@ class Game:
     def check_for_green_skips(self):
         all_pieces = self.board.get_green_pieces()
 
+        # check if all on place
+        if all(piece.on_place is True for piece in all_pieces):
+            self.draw_win_statement('GREEN')
+
         for piece in all_pieces:
             v_moves, valid_skip = self.board.get_valid_moves(piece)
 
@@ -88,6 +92,9 @@ class Game:
 
     def check_for_red_skips(self):
         all_pieces = self.board.get_red_pieces()
+        # check if all on place
+        if all(piece.on_place is True for piece in all_pieces):
+            self.draw_win_statement('RED')
 
         for piece in all_pieces:
             v_moves, valid_skip = self.board.get_valid_moves(piece)
@@ -98,3 +105,7 @@ class Game:
                 self.selected = None
 
         self.update()
+
+    def draw_win_statement(self, color):
+        pygame.draw.circle(self.win, eval(f'{color}'), (WIDTH //2, HEIGHT//2), 80)
+        self.win.blit(CROWN, (WIDTH * 0.5, HEIGHT * 0.5))
