@@ -4,6 +4,7 @@ from .piece import Piece
 
 
 class Board:
+
     def __init__(self):
         self.board = []
         self.create_board()
@@ -21,6 +22,7 @@ class Board:
         piece.move(row, col)
         self.check_if_on_place(piece, row, col)
         # TODO: make on_place val == True (II 20:00)
+
 
     def check_if_on_place(self, piece, row, col):
         if piece.starting_row == 0 or piece.starting_row == 3:
@@ -97,21 +99,25 @@ class Board:
 
         # update move list /w compulsory jumps
         valid_skip = False
+        moves.update(left_up[0])
+        moves.update(right_up[0])
+        moves.update(left_down[0])
+        moves.update(right_down[0])
 
-        if True not in boollist:
-            moves.update(left_up[0])
-            moves.update(right_up[0])
-            moves.update(left_down[0])
-            moves.update(right_down[0])
-        else:
-            for move in movelist:
-                if move[1] is True:
-                    moves.update(move[0])
-                    if move[0]:
-                        valid_skip = True
-            if not valid_skip:
-                for move in movelist:
-                    moves.update(move[0])
+        # if True not in boollist:
+        #     moves.update(left_up[0])
+        #     moves.update(right_up[0])
+        #     moves.update(left_down[0])
+        #     moves.update(right_down[0])
+        # else:
+        #     for move in movelist:
+        #         if move[1] is True:
+        #             moves.update(move[0])
+        #             if move[0]:
+        #                 valid_skip = True
+        #     if not valid_skip:
+        #         for move in movelist:
+        #             moves.update(move[0])
 
         return moves, valid_skip
 
