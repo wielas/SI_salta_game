@@ -1,5 +1,5 @@
 from mcts import MonteCarloTreeSearchNode
-class MonteCarloTreeSearchF:
+class MCTS:
     def __init__(self, node: MonteCarloTreeSearchNode):
         self.root = node
 
@@ -14,8 +14,8 @@ class MonteCarloTreeSearchF:
         return current_state
 
 
-    def run(self):
-        number_of_simulations = 100
+    def run(self,n):
+        number_of_simulations = n
         for i in range(number_of_simulations):
             v = self._tree_policy()
             reward = v.rollout()

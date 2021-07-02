@@ -1,7 +1,7 @@
 from salta.board import Board
 import numpy as np
 import copy
-class GameState:
+class State:
     P1=1
     P2=-1
     def __init__(self,state,next_to_move=1,c_move=None):
@@ -32,7 +32,7 @@ class GameState:
         else:
             return False
 
-    def get_legal_actions(self):
+    def get_legal_moves(self):
         player=self.next_to_move
         if player==1:
             pieces = self.board.get_green_pieces()
@@ -74,5 +74,5 @@ class GameState:
     def move(self,move):
         new_board=copy.deepcopy(self.board)
         new_board.move(move[1], move[0][0], move[0][1])
-        next_to_move=GameState.P2 if self.next_to_move==GameState.P1 else GameState.P1
-        return GameState(new_board,next_to_move,move)
+        next_to_move=State.P2 if self.next_to_move==State.P1 else State.P1
+        return State(new_board,next_to_move,move)

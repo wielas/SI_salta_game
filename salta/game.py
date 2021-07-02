@@ -1,8 +1,8 @@
 import pygame
 from .constants import RED, GREEN, BLUE, SQUARE_SIZE, CROWN, WIDTH, HEIGHT
 from salta.board import Board
-from mcts_fin import MonteCarloTreeSearchF
-from state import GameState
+from mcts_fin import MCTS
+from state import State
 from mcts import MonteCarloTreeSearchNode
 
 class Game:
@@ -49,14 +49,14 @@ class Game:
 
     def _move(self, row, col):
         piece = self.board.get_piece(row, col)
-        mcts=MonteCarloTreeSearchF(MonteCarloTreeSearchNode(GameState(self.board)))
-        print(mcts.run())
+
         if self.selected and piece == 0 and (row, col) in self.valid_moves:
             move=self.board.move(self.selected, row, col)
             self.change_turn()
         else:
             return False
-
+        # mcts = MCTS(MonteCarloTreeSearchNode(State(self.board)))
+        # print(mcts.run(10))
         return True
 
     def draw_valid_moves(self, moves):

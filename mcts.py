@@ -1,10 +1,10 @@
 import numpy as np
 from collections import defaultdict
 from salta.board import Board
-from state import GameState
+from state import State
 
 class MonteCarloTreeSearchNode():
-    def __init__(self, state: GameState, parent=None):
+    def __init__(self, state: State, parent=None):
         self.state = state
         self.results = defaultdict(int)
         self._number_of_visits = 0
@@ -19,7 +19,7 @@ class MonteCarloTreeSearchNode():
     @property
     def untried_actions(self):
         if not hasattr(self,'_untried_actions'):
-            self._untried_actions=self.state.get_legal_actions()
+            self._untried_actions=self.state.get_legal_moves()
         return self._untried_actions
     @property
     def n(self):
@@ -38,12 +38,9 @@ class MonteCarloTreeSearchNode():
     def rollout(self):
         current_state = self.state
         while not current_state.is_game_over():
-            possible_moves = current_state.get_legal_actions()
+            possible_moves = current_state.get_legal_moves()
             move = self.rollout_policy(possible_moves)
             current_state = current_state.move(move)
-            print(move)
-
-
         return current_state.game_result()
 
     def rollout_policy(self, possible_moves):
